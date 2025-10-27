@@ -12,7 +12,7 @@ public:
     TTF_Font* font;
 
     Renderer() {
-        font = TTF_OpenFont("UbuntuMono.ttf", 24); 
+        font = TTF_OpenFont("./assets/font/UbuntuMono.ttf", 24); 
         if (!font) {
             std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
         }
