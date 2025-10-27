@@ -13,7 +13,7 @@ HttpClient::HttpClient() {
 }
 
 HttpClient::~HttpClient() {
-	if (curlHandle) curl_easy_cleanup((CURL*)curlHandle);
+	if (curlHandle) curl_easy_cleanup(curlHandle);
 	curl_global_cleanup();
 }
 

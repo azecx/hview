@@ -22,6 +22,15 @@ public:
         if (font) TTF_CloseFont(font);
     }
 
-    void renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node, int x, int& y);
-    void drawText(SDL_Renderer* renderer, const std::string& text, int x, int y);
+    struct TextStyle {
+        bool bold = false;
+        bool italic = false;
+        bool none = false;
+        bool link = false;
+    };
+
+    void renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node, int& x, int& y, TextStyle style);
+    
+private:
+    void drawText(SDL_Renderer* renderer, const std::string& text, int x, int y, TextStyle style);
 };
