@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <memory>
+#include <SDL_ttf.h>
+
 
 #include "Window/Window.h"
 #include "Network/HttpClient.h"
@@ -14,16 +16,15 @@ int main(int argc, char* argv[]) {
 	SDL_Renderer* renderer = nullptr;
 	SDL_Window* window = nullptr;
 
+	//fuck error handling :)
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_CreateWindowAndRenderer(640, 640, 0, &window, &renderer);
 	SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
+	TTF_Init();
+
 	HTMLParser html;
 	std::shared_ptr<HTMLNode> dom = html.parse("<p>Hello <b>world</b>!</p>");
-
-	Renderer domRenderer;
-	int y = 0;
-	domRenderer.renderNode(renderer, dom, 10, y);
 
 	Window* browserWindow = new Window();
 	
@@ -41,13 +42,14 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
-		browserWindow->render(renderer, window);
+		browserWindow->render(renderer, window, dom);
 
 		SDL_Delay(16); 
 	}
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	TTF_Quit();
 	SDL_Quit();
 	return 0;
 }
