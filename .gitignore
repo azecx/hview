@@ -1,0 +1,6 @@
+/x64/
+libcurl.dll
+SDL2.dll
+zlib.dll
+/browser/x64/
+.vs
