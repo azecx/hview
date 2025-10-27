@@ -8,6 +8,7 @@
 #include "Network/HttpClient.h"
 #include "HTML/HTMLParser.h"
 #include "HTML/HTMLNode.h"
+#include "Renderer/Renderer.h"
 
 int main(int argc, char* argv[]) {
 	SDL_Renderer* renderer = nullptr;
@@ -19,6 +20,10 @@ int main(int argc, char* argv[]) {
 
 	HTMLParser html;
 	std::shared_ptr<HTMLNode> dom = html.parse("<p>Hello <b>world</b>!</p>");
+
+	Renderer domRenderer;
+	int y = 0;
+	domRenderer.renderNode(renderer, dom, 10, y);
 
 	Window* browserWindow = new Window();
 	

@@ -1,48 +1,54 @@
 #include "HTMLParser.h"
 #include <stack>
-#include <sstream>
 #include <cctype>
 
 std::shared_ptr<HTMLNode> HTMLParser::parse(const std::string& html) {
-	std::shared_ptr<HTMLNode> root = HTMLNode::createElement("root");
-	std::stack<std::shared_ptr<HTMLNode>> stack;
-	stack.push(root);
+    auto root = HTMLNode::createElement("root");
+    std::stack<std::shared_ptr<HTMLNode>> stack;
+    stack.push(root);
 
+    size_t i = 0;
+    while (i < html.size()) {
+        if (html[i] == '<') {
+            // closing tag
+            if (i + 1 < html.size() && html[i + 1] == '/') {
+                i += 2;
+                size_t end = html.find('>', i);
+                if (!stack.empty()) stack.pop();
+                i = (end == std::string::npos) ? html.size() : end + 1;
+            }
+            // opening tag
+            else {
+                i++;
+                size_t end = html.find('>', i);
+                if (end == std::string::npos) end = html.size();
+                std::string tag = html.substr(i, end - i);
 
-	//parsing shit
-	size_t i = 0;
-	while (i < html.size()) {
-		//starting tag, means element
-		if (html[i] == '<') {
-			if (html[+1] == '/') {
-				//closing tag
-				i += 2;
-				size_t end = html.find('>', i);
-				stack.pop();
-				i = end + 1;
-			}
-			else {
-				//opening tag
-				i++;
-				size_t end = html.find('>', i);
-				std::string tag = html.substr(i, end - i);
+                // remove trailing spaces or slashes
+                while (!tag.empty() && (isspace(tag.back()) || tag.back() == '/'))
+                    tag.pop_back();
 
-				//create tag node
-				auto node = HTMLNode::createElement(tag);
-				stack.top()->children.push_back(node);
-				node->parent = stack.top();
-				stack.push(node);
-				i = end + 1;
-			}
-		}
-		else {
-			//else, it's obv text content. so make a text node.
-			size_t end = html.find("<");
-			std::string text = html.substr(i, end - i);
-			auto txtNode = HTMLNode::createText(text);
-			stack.top()->children.push_back(txtNode);
-			txtNode->parent = stack.top();
-			i = end;
-		}
-	}
+                auto node = HTMLNode::createElement(tag);
+                stack.top()->children.push_back(node);
+                node->parent = stack.top();
+                stack.push(node);
+                i = end + 1;
+            }
+        }
+        // text node
+        else {
+            size_t end = html.find('<', i);
+            if (end == std::string::npos) end = html.size();
+            std::string text = html.substr(i, end - i);
+
+            if (!text.empty()) {
+                auto txtNode = HTMLNode::createText(text);
+                stack.top()->children.push_back(txtNode);
+                txtNode->parent = stack.top();
+            }
+            i = end;
+        }
+    }
+
+    return root;
 }
