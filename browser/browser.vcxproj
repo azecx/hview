@@ -129,13 +129,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\HTML\HTMLNode.cpp" />
+    <ClCompile Include="src\HTML\HTMLParser.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Network\HttpClient.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HTML\HTMLNode.h" />
+    <ClInclude Include="src\HTML\HTMLParser.h" />
     <ClInclude Include="src\Network\HttpClient.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Renderer\.gitignore" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
