@@ -22,8 +22,9 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{a325feda-b31e-4939-b087-913f8720d69d}</ProjectGuid>
-    <RootNamespace>browser</RootNamespace>
+    <RootNamespace>hview</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>hview</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,6 +75,10 @@
     <IncludePath>C:\Libraries\SDL2_ttf\include;C:\Libraries\zlib\include;C:\Libraries\libcurl\include;C:\Libraries\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Libraries\SDL2_ttf\lib\x64;C:\Libraries\zlib\lib;C:\Libraries\libcurl\lib\x64;C:\Libraries\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Libraries\SDL2\include;C:\Libraries\zlib\include;C:\Libraries\SDL2_ttf\include;C:\Libraries\libcurl\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\zlib\lib;C:\Libraries\SDL2_ttf\lib\x64;C:\Libraries\libcurl\lib\x64;C:\Libraries\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -110,6 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2_ttf.lib;SDL2.lib;SDL2main.lib;zdll.lib;zdlld.lib;zlib.lib;zlibd.lib;libcurl.lib;libcurld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

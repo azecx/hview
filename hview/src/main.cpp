@@ -5,7 +5,6 @@
 #include <memory>
 #include <SDL_ttf.h>
 
-
 #include "Window/Window.h"
 #include "Network/HttpClient.h"
 #include "HTML/HTMLParser.h"
