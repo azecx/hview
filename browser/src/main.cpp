@@ -2,9 +2,12 @@
 #include <SDL.h>
 #include <iostream>
 #include <stdio.h>
+#include <memory>
 
 #include "Window/Window.h"
 #include "Network/HttpClient.h"
+#include "HTML/HTMLParser.h"
+#include "HTML/HTMLNode.h"
 
 int main(int argc, char* argv[]) {
 	SDL_Renderer* renderer = nullptr;
@@ -13,6 +16,9 @@ int main(int argc, char* argv[]) {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_CreateWindowAndRenderer(640, 640, 0, &window, &renderer);
 	SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+	HTMLParser html;
+	std::shared_ptr<HTMLNode> dom = html.parse("<p>Hello <b>world</b>!</p>");
 
 	Window* browserWindow = new Window();
 	
