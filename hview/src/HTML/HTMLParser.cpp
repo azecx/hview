@@ -1,8 +1,12 @@
 #include "HTMLParser.h"
 #include <stack>
 #include <cctype>
+#include <algorithm>
 
-std::shared_ptr<HTMLNode> HTMLParser::parse(const std::string& html) {
+std::shared_ptr<HTMLNode> HTMLParser::parse(const std::string& inputHTML) {
+    std::string html = inputHTML;
+    html.erase(std::remove(html.begin(), html.end(), '\n'), html.cend());
+
     auto root = HTMLNode::createElement("root");
     std::stack<std::shared_ptr<HTMLNode>> stack;
     stack.push(root);

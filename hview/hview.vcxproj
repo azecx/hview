@@ -149,6 +149,9 @@
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="html\index.html" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

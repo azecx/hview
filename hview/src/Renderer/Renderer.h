@@ -1,26 +1,19 @@
 #pragma once
 #include <memory>
+#include <string>
 #include "SDL.h"
-#include "../HTML/HTMLNode.h"
 #include "SDL_ttf.h"
-#include "stdio.h"
-#include <iostream>
-
+#include "../HTML/HTMLNode.h"
 
 class Renderer {
 public:
-    TTF_Font* font;
+    TTF_Font* font = nullptr;
+    TTF_Font* boldFont = nullptr;
+    TTF_Font* italicFont = nullptr;
+    TTF_Font* boldItalicFont = nullptr;
 
-    Renderer() {
-        font = TTF_OpenFont("./assets/font/UbuntuMono.ttf", 24); 
-        if (!font) {
-            std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
-        }
-    }
-
-    ~Renderer() {
-        if (font) TTF_CloseFont(font);
-    }
+    Renderer(int pxSize = 24);
+    ~Renderer();
 
     struct TextStyle {
         bool bold = false;
@@ -30,7 +23,8 @@ public:
     };
 
     void renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node, int& x, int& y, TextStyle style);
-    
+
 private:
     void drawText(SDL_Renderer* renderer, const std::string& text, int x, int y, TextStyle style);
+    int measureTextWidth(TTF_Font* baseFont, const std::string& text, TextStyle style);
 };

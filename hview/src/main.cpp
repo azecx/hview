@@ -22,17 +22,17 @@ int main(int argc, char* argv[]) {
 
 	TTF_Init();
 
-	HTMLParser html;
-	std::shared_ptr<HTMLNode> dom = html.parse("<p>Hello <b>world</b>!</p>");
+	HttpClient http;
+
+	HTMLParser parser;
+	std::shared_ptr<HTMLNode> dom = parser.parse(http.get("https://html.aze.cx/"));
+
+	http.~HttpClient();
 
 	Window* browserWindow = new Window();
 	
 	bool running = true;
 	SDL_Event event;
-
-	HttpClient http;
-	std::cout << http.get("https://html.aze.cx/") << std::endl;
-	http.~HttpClient();
 
 	while (running) {
 		while (SDL_PollEvent(&event)) {
