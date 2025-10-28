@@ -15,7 +15,7 @@ void Window::render(SDL_Renderer* renderer, SDL_Window* window, std::shared_ptr<
 	int y = 10;
 	int x = 10;
 	Renderer::TextStyle style;
-	domRenderer.renderNode(renderer, dom, x, y, style);
+	domRenderer.renderNode(renderer, window, dom, x, y, style);
 
 	SDL_RenderPresent(renderer);
 }

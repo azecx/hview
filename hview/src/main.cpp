@@ -17,7 +17,8 @@ int main(int argc, char* argv[]) {
 
 	//fuck error handling :)
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_CreateWindowAndRenderer(640, 640, 0, &window, &renderer);
+	SDL_CreateWindowAndRenderer(1280, 720, 0, &window, &renderer);
+	SDL_SetWindowResizable(window, SDL_TRUE);
 	SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
 	TTF_Init();

@@ -23,7 +23,7 @@ public:
         std::string url;
     };
 
-    void renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node, int& x, int& y, TextStyle style);
+    void renderNode(SDL_Renderer* renderer, SDL_Window* window, std::shared_ptr<HTMLNode> node, int& x, int& y, TextStyle style);
 
 private:
     void drawText(SDL_Renderer* renderer, const std::string& text, int x, int y, TextStyle style);

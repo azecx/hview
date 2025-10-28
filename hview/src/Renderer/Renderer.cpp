@@ -30,7 +30,7 @@ int Renderer::measureTextWidth(TTF_Font* baseFont, const std::string& text, Rend
     return w;
 }
 
-void Renderer::renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node, int& x, int& y, Renderer::TextStyle style) {
+void Renderer::renderNode(SDL_Renderer* renderer, SDL_Window* window, std::shared_ptr<HTMLNode> node, int& x, int& y, Renderer::TextStyle style) {
     if (!node) return;
 
     if (node->type == HTMLNode::Type::TEXT) {
@@ -75,8 +75,16 @@ void Renderer::renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node
             }
         }
 
-        for (auto& child : node->children) {
-            renderNode(renderer, child, x, y, newStyle);
+        if (node->tagName == "title") {
+            for (auto& child : node->children) {
+                if (child->type == HTMLNode::Type::TEXT) {
+                    SDL_SetWindowTitle(window, child->textContent.c_str());
+                }
+            }
+        } else {
+            for (auto& child : node->children) {
+                renderNode(renderer, window, child, x, y, newStyle);
+            }
         }
     }
 }
