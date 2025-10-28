@@ -60,7 +60,7 @@ void Renderer::renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node
             }
         }
 
-        if (node->tagName == "p") {
+        if (node->tagName == "p" || node->tagName == "br") {
             x = 10;
             y += lineHeight;
         }

@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 	HttpClient http;
 
 	HTMLParser parser;
-	std::shared_ptr<HTMLNode> dom = parser.parse(http.get("https://html.aze.cx/"));
+	std::shared_ptr<HTMLNode> dom = parser.parse(http.get("http://127.0.0.1:5500/hview/html/index.html"));
 
 	http.~HttpClient();
 
