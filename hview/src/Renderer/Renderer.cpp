@@ -38,8 +38,27 @@ void Renderer::renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node
     }
     else if (node->type == HTMLNode::Type::ELEMENT) {
         TextStyle newStyle = style;
-        if (node->tagName == "b") newStyle.bold = true;
-        if (node->tagName == "i") newStyle.italic = true;
+        if (node->tagName == "b") {
+            auto parentPtr = node->parent.lock();
+
+            if (!parentPtr || parentPtr->tagName != "i") {
+                newStyle.bold = true;
+            }
+            else {
+                newStyle.bold = true;
+                newStyle.italic = true;
+            }
+        }
+        if (node->tagName == "i") {
+            auto parentPtr = node->parent.lock();
+            if (!parentPtr || parentPtr->tagName != "b") {
+                newStyle.italic = true;
+            }
+            else {
+                newStyle.italic = true;
+                newStyle.bold = true;
+            }
+        }
 
         if (node->tagName == "p") {
             x = 10;
