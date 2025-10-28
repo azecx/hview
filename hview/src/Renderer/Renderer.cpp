@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include <iostream>
 
 int lineHeight = 30;
 
@@ -19,7 +20,7 @@ Renderer::~Renderer() {
 //thanks stackoverflow.com
 int Renderer::measureTextWidth(TTF_Font* baseFont, const std::string& text, Renderer::TextStyle style) {
     int w = 0, h = 0;
-    TTF_Font* measureFont = font;
+    TTF_Font* measureFont = baseFont;
 
     if (style.bold && style.italic && boldItalicFont) measureFont = boldItalicFont;
     else if (style.bold && boldFont) measureFont = boldFont;
@@ -65,6 +66,15 @@ void Renderer::renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node
             y += lineHeight;
         }
 
+        if (node->tagName == "a") {
+            for (const auto& attribute : node->attributes) {
+                if (attribute.first == "href") {
+                    newStyle.link = true;
+                    newStyle.url = attribute.second;
+                }
+            }
+        }
+
         for (auto& child : node->children) {
             renderNode(renderer, child, x, y, newStyle);
         }
@@ -79,6 +89,21 @@ void Renderer::drawText(SDL_Renderer* renderer, const std::string& text, int x, 
     else if (style.italic && italicFont) drawFont = italicFont;
 
     SDL_Color color = { 0, 0, 0, 255 };
+
+    if (style.link) {
+        color = { 0, 0, 238, 255 };
+
+        Uint8 r, g, b, a;
+        SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 238, 255);
+
+        SDL_Rect underline = { x, y+24+3, measureTextWidth(font, text, style), 1 };
+        SDL_RenderFillRect(renderer, &underline);
+
+        SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    }
+
     SDL_Surface* surface = TTF_RenderText_Blended(drawFont, text.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);

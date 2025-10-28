@@ -20,6 +20,7 @@ public:
         bool italic = false;
         bool none = false;
         bool link = false;
+        std::string url;
     };
 
     void renderNode(SDL_Renderer* renderer, std::shared_ptr<HTMLNode> node, int& x, int& y, TextStyle style);
