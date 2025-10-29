@@ -1,5 +1,7 @@
 #include "Renderer.h"
 #include <iostream>
+#include <sstream>
+#include <string>
 
 int lineHeight = 30;
 
@@ -34,8 +36,26 @@ void Renderer::renderNode(SDL_Renderer* renderer, SDL_Window* window, std::share
     if (!node) return;
 
     if (node->type == HTMLNode::Type::TEXT) {
-        drawText(renderer, node->textContent, x, y, style);
-        x += measureTextWidth(font, node->textContent, style);
+        std::string text = node->textContent;
+        int windowHeight, windowWidth;
+        SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+
+        int startX = x;
+        int startY = y;
+
+        std::istringstream iss(text);
+        std::string word;
+        while (iss >> word) {
+            int wordWidth = measureTextWidth(font, word + " ", style);
+
+            if (x + wordWidth > windowWidth) {
+                x = startX;
+                y += lineHeight;
+            }
+
+            drawText(renderer, word + " ", x, y, style);
+            x += wordWidth;
+        }
     }
     else if (node->type == HTMLNode::Type::ELEMENT) {
         TextStyle newStyle = style;
