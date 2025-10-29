@@ -3,13 +3,13 @@
 #include <sstream>
 #include <string>
 
-int lineHeight = 30;
+int lineHeight = 24;
 
 Renderer::Renderer(int pxSize) {
-    font = TTF_OpenFont("./assets/font/SegoeUI.ttf", pxSize);
-    boldFont = TTF_OpenFont("./assets/font/SegoeUI-Bold.ttf", pxSize);
-    italicFont = TTF_OpenFont("./assets/font/SegoeUI-Italic.ttf", pxSize);
-    boldItalicFont = TTF_OpenFont("./assets/font/SegoeUI-BoldItalic.ttf", pxSize);
+    font = TTF_OpenFont("./assets/font/Roboto.ttf", pxSize);
+    boldFont = TTF_OpenFont("./assets/font/Roboto-Bold.ttf", pxSize);
+    italicFont = TTF_OpenFont("./assets/font/Roboto-Italic.ttf", pxSize);
+    boldItalicFont = TTF_OpenFont("./assets/font/Roboto-BoldItalic.ttf", pxSize);
 }
 
 Renderer::~Renderer() {
@@ -53,7 +53,7 @@ void Renderer::renderNode(SDL_Renderer* renderer, SDL_Window* window, std::share
                 y += lineHeight;
             }
 
-            drawText(renderer, word + " ", x, y, style);
+            drawText(renderer, word, x, y, style);
             x += wordWidth;
         }
     }
@@ -126,7 +126,7 @@ void Renderer::drawText(SDL_Renderer* renderer, const std::string& text, int x, 
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 238, 255);
 
-        SDL_Rect underline = { x, y+24+3, measureTextWidth(font, text, style), 1 };
+        SDL_Rect underline = { x, y+24+1, measureTextWidth(font, text, style), 1 };
         SDL_RenderFillRect(renderer, &underline);
 
         SDL_SetRenderDrawColor(renderer, r, g, b, a);
