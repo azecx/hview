@@ -24,9 +24,11 @@ int main(int argc, char* argv[]) {
 	TTF_Init();
 
 	HttpClient http;
+	std::string url = "https://html.aze.cx/";
 
 	HTMLParser parser;
-	std::shared_ptr<HTMLNode> dom = parser.parse(http.get("https://aalex.uk/"));
+
+	std::shared_ptr<HTMLNode> dom = parser.parse(http.get(url));
 
 	http.~HttpClient();
 
